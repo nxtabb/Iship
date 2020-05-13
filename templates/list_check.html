@@ -1,0 +1,33 @@
+{% extends 'base_detail_list2.html' %}
+{% load staticfiles %}
+{% block tittle %}待审查图片列表{% endblock tittle %}
+{% block main_content%}
+	<div class="main_wrap clearfix">
+		<div class="r_wrap fr clearfix">
+			<ul class="goods_type_list clearfix">
+                {% for good in goods_page.object_list %}
+				<li>
+					<a href="{% url 'goods:detail_check' good.id%}" ><img src="/static/{{ good.image }}"></a>
+				</li>
+                {% endfor %}
+			</ul>
+
+
+			<div class="pagenation">
+                {% if goods_page.has_previous %}
+				<a href="{% url 'goods:list_check'  goods_page.previous_page_number %}">上一页</a>
+                {% endif %}
+            {% for pindex in pages %}
+                {% if pindex == goods_page.number%}
+				<a href="{% url 'goods:list_check'  pindex %}" class="active">{{ pindex }}</a>
+                {% else %}
+				<a href="{% url 'goods:list_check'  pindex %}">{{ pindex }}</a>
+                {% endif %}
+            {% endfor %}
+                {% if goods_page.has_next %}
+				<a href="{% url 'goods:list_check'  goods_page.next_page_number %}">下一页</a>
+                {% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock main_content %}

@@ -1,0 +1,78 @@
+{% extends 'base_user_center.html' %}
+{% load staticfiles %}
+{% block right_content %}
+<div class="right_content clearfix">
+				<div class="info_con clearfix">
+				<h3 class="common_title2">基本信息</h3>
+						<ul class="user_info_list">
+							<li><span>用户名：</span>{{user.username}}</li>
+                            <li><span>账号状态：</span>{% if user.is_active == 1 %}已激活{% else %}未激活{% endif %}</li>
+                            <li><span>邮箱：</span>{{user.email}}</li>
+                            <li><span>注册日期：</span>{{user.create_time}}</li>
+                            <li><span>最后登录：</span>{{user.last_login}}</li>
+                            <li><span>身份：</span>{% if user.authority == 2 %}普通用户{% elif  user.authority == 1 %}管理员{% else %}审查员{% endif %}</li>
+						    <li><span>权限：</span>{% if user.authority == 2 %} √允许登录网站.√允许浏览网站全部图片.√允许下载原始图片. √允许发表图片. √允许删除自己的图片.{% elif user.authority == 1 %}√允许登录网站.√允许浏览网站全部图片.√允许下载原始图片. √允许发表图片.  √允许删除自己的图片.√允许管理系统后台.√允许管理网站用户.{% else %}√允许登录网站.√允许浏览网站全部图片. √允许浏览图片大图. √允许下载原始图片. √允许审查图片.{% endif %}</li>
+                            {% if user.authority == 2 or user.authority == 1 %}<li><span>上传图片总数：</span>{{ image_count }}张</li>
+                            <li><span>未审核图片数：</span>{{ imageyet_count }}张
+                            <li><span>审核通过图片数：</span>{{ imageyes_count }}张
+                            <li><span>被驳回图片数：</span>{{ imageno_count }}张{% endif %}
+                            {% if user.authority == 2 or user.authority == 1 %}<li><span></span></li>{% else %}<li><span>已审核：</span>{{ user.total_check }}张</li>
+                            <li><span>待审核：</span>{{ image_checkyet_count }}张</li>{% endif %}
+                        {% if user.authority == 2 %}<div id="container" style=" width:800px;min-width:800px;height:400px ;margin-left: 150px;margin-top: -140px"></div>{% endif %}
+                        </ul>
+				</div>
+
+		</div>
+{% endblock right_content %}
+{% block bottomfiles %}
+<div class="container_pic_module_column"></div>
+<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+<script type="text/javascript">
+        Highcharts.chart('container', {
+		chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie',
+		},
+		title: {
+				text: '已上传图片情况图'
+		},
+		tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		plotOptions: {
+				pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+								enabled: true,
+								format: '<b>{point.name}</b>: {point.y} 张',
+								style: {
+										color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+								}
+						}
+				}
+		},
+		series: [{
+				name: '占比',
+				colorByPoint: true,
+				data: [{
+						name: '未审核图片',
+						y: {{imageyet_count}}
+
+				}, {
+						name: '已审核图片',
+						y: {{imageyes_count}},
+				}, {
+						name: '被驳回图片',
+						y: {{imageno_count}},
+				}]
+		}]
+});
+    </script>
+
+{% endblock bottomfiles %}

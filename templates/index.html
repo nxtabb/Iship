@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% block tittle  %}iship数据集网站首页{% endblock tittle %}
+{% load staticfiles %}
+{% block topfiles %}
+	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/slide.js' %}"></script>
+{% endblock topfiles %}
+</head>
+{% block body %}
+
+
+
+        {% if user.authority == 3 %}
+    <div class="navbar_con">
+		<div class="navbar">
+			<h1 class="fl">查看未审图片导航</h1>
+			<ul class="navlist fl">
+				<li><a href="http://www.hrbeu.edu.cn/">哈尔滨工程大学首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="{% url 'goods:download' %}">下载xls和标注工具</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="center_con clearfix">
+		<ul class="subnav fl">
+
+        <table class="table1" border="0" width="300" >
+  <tr>
+    <th><a href="{% url 'goods:list_more_check' 1 1 %}" class="{{ type.logo}}">邮轮</a></th>
+    <th><a href="{% url 'goods:list_more_check' 4 1 %}" class="{{ type.logo}}">散货船及油轮</a></th>
+    <th><a href="{% url 'goods:list_more_check' 12 1 %}" class="{{ type.logo}}">艇型船</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more_check' 7 1 %}" class="{{ type.logo}}">航母</a></th>
+    <th><a href="{% url 'goods:list_more_check' 11 1 %}" class="{{ type.logo}}">危化品船</a></th>
+    <th><a href="{% url 'goods:list_more_check' 10 1 %}" class="{{ type.logo}}">滚装船</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more_check' 8 1 %}" class="{{ type.logo}}">军舰</a></th>
+    <th><a href="{% url 'goods:list_more_check' 16 1 %}" class="{{ type.logo}}">海工平台</a></th>
+    <th><a href="{% url 'goods:list_more_check' 5 1 %}" class="{{ type.logo}}">岛礁</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more_check' 6 1 %}" class="{{ type.logo}}">渔船</a></th>
+    <th><a href="{% url 'goods:list_more_check' 3 1 %}" class="{{ type.logo}}">集装箱船</a></th>
+    <th><a href="{% url 'goods:list_more_check' 15 1 %}" class="{{ type.logo}}">灯桩</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more_check' 14 1 %}" class="{{ type.logo}}">浮标</a></th>
+    <th><a href="{% url 'goods:list_more_check' 13 1 %}" class="{{ type.logo}}">工程船舶</a></th>
+    <th><a href="{% url 'goods:list_more_check' 9 1 %}" class="{{ type.logo}}">帆船</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more_check' 17 1 %}" class="{{ type.logo}}">浮冰</a></th>
+    <th><a href="{% url 'goods:list_more_check' 18 1 %}" class="{{ type.logo}}">其他船舶</a></th>
+  </tr>
+
+
+</table>
+		</ul>
+		<div class="slide fl">
+			<ul class="slide_pics">
+                {% for banner in goods_banners %}
+                    <li><a href="#"> <img src="{{ banner.image.url }}" alt="幻灯片"></a></li>
+                {% endfor %}
+			</ul>
+			<div class="prev"></div>
+			<div class="next"></div>
+			<ul class="points"></ul>
+		</div>
+		<div class="adv fl">
+            {% for banner in promotion_banners %}
+			<a href="{{ banner.url }}"><img src="{{ banner.image.url }}"></a>
+            {% endfor %}
+		</div>
+	</div>
+    {% for type in types %}
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<a href="{% url 'goods:list_more' type.id  1 %}" class="goods_more fl" id="fruit_more">{{ type.name }}</a>
+			<div class="subtitle fl">
+				<span>|</span>
+                {% for banner in type.title_banners %}
+				<a href={%url 'goods:detail' banner.sku.id %}>{{ banner.sku.name }}</a>
+                {% endfor %}
+			</div>
+        <a href="{% url 'goods:list_more_check' type.id  1 %}" class="goods_more fr" id="fruit_more">查看{{ type.name }}的未审图片</a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="{{ type.image.url}}"></div>
+			<ul class="goods_list fl">
+                {% for banner in type.image_banners %}
+				<li>
+					<h4><a>{{ banner.sku.name }}</a></h4>
+					<a><img src="{{ banner.sku.image.url }}"></a>
+				</li>
+                {% endfor %}
+			</ul>
+		</div>
+	</div>
+    {% endfor %}
+    {% else %}
+	<div class="navbar_con">
+		<div class="navbar">
+			<h1 class="fl">查看过审图片导航</h1>
+			<ul class="navlist fl">
+				<li><a href="http://www.hrbeu.edu.cn/">哈尔滨工程大学首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="{% url 'goods:download' %}">下载xls和标注工具</a></li>
+                {% if user.is_authenticated %}
+                <li class="interval">|</li>
+                <li><a href="{% url 'goods:listyet' 1 %}">我的未审图片</a></li>
+				<li class="interval">|</li>
+				<li><a href="{% url 'goods:listok' 1 %}">我的已审图片</a></li>
+				<li class="interval">|</li>
+				<li><a href="{% url 'goods:listno' 1 %}">我的被驳回图片</a></li>
+                <li class="interval">|</li>
+				<li><a href="{% url 'goods:list' 1 %}">我的所有图片</a></li>
+                {% endif %}
+			</ul>
+		</div>
+	</div>
+	<div class="center_con clearfix">
+		<ul class="subnav fl">
+
+        <table class="table1" border="0" width="300" >
+  <tr>
+    <th><a href="{% url 'goods:list_more' 1 1 %}" class="{{ type.logo}}">邮轮</a></th>
+    <th><a href="{% url 'goods:list_more' 4 1 %}" class="{{ type.logo}}">散货船及油轮</a></th>
+    <th><a href="{% url 'goods:list_more' 12 1 %}" class="{{ type.logo}}">艇型船</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more' 7 1 %}" class="{{ type.logo}}">航母</a></th>
+    <th><a href="{% url 'goods:list_more' 11 1 %}" class="{{ type.logo}}">危化品船</a></th>
+    <th><a href="{% url 'goods:list_more' 10 1 %}" class="{{ type.logo}}">滚装船</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more' 8 1 %}" class="{{ type.logo}}">军舰</a></th>
+    <th><a href="{% url 'goods:list_more' 16 1 %}" class="{{ type.logo}}">海工平台</a></th>
+    <th><a href="{% url 'goods:list_more' 5 1 %}" class="{{ type.logo}}">岛礁</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more' 6 1 %}" class="{{ type.logo}}">渔船</a></th>
+    <th><a href="{% url 'goods:list_more' 3 1 %}" class="{{ type.logo}}">集装箱船</a></th>
+    <th><a href="{% url 'goods:list_more' 15 1 %}" class="{{ type.logo}}">灯桩</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more' 14 1 %}" class="{{ type.logo}}">浮标</a></th>
+    <th><a href="{% url 'goods:list_more' 13 1 %}" class="{{ type.logo}}">工程船舶</a></th>
+    <th><a href="{% url 'goods:list_more' 9 1 %}" class="{{ type.logo}}">帆船</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more' 17 1 %}" class="{{ type.logo}}">浮冰</a></th>
+    <th><a href="{% url 'goods:list_more' 18 1 %}" class="{{ type.logo}}">其他船舶</a></th>
+  </tr>
+
+
+</table>
+		</ul>
+		<div class="slide fl">
+			<ul class="slide_pics">
+                {% for banner in goods_banners %}
+                    <li><a href="#"> <img src="{{ banner.image.url }}" alt="幻灯片"></a></li>
+                {% endfor %}
+			</ul>
+			<div class="prev"></div>
+			<div class="next"></div>
+			<ul class="points"></ul>
+		</div>
+		<div class="adv fl">
+            {% for banner in promotion_banners %}
+			<a href="{{ banner.url }}"><img src="{{ banner.image.url }}"></a>
+            {% endfor %}
+		</div>
+	</div>
+    {% for type in types %}
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<a href="{% url 'goods:list_more' type.id  1 %}" class="goods_more fl" id="fruit_more">{{ type.name }}</a>
+			<div class="subtitle fl">
+				<span>|</span>
+                {% for banner in type.title_banners %}
+				<a href={%url 'goods:detail' banner.sku.id %}>{{ banner.sku.name }}</a>
+                {% endfor %}
+			</div>
+        <a href="{% url 'goods:list_more' type.id  1 %}" class="goods_more fr" id="fruit_more">查看{{ type.name }}的过审图片</a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="{{ type.image.url}}"></div>
+			<ul class="goods_list fl">
+                {% for banner in type.image_banners %}
+				<li>
+					<h4><a>{{ banner.sku.name }}</a></h4>
+					<a><img src="{{ banner.sku.image.url }}"></a>
+				</li>
+                {% endfor %}
+			</ul>
+		</div>
+	</div>
+    {% endfor %}
+    {% endif %}
+
+{% endblock body %}

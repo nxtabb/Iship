@@ -1,0 +1,69 @@
+{% extends 'base_detail_list.html' %}
+{% load staticfiles %}
+{% block tittle %}{{user.username}}被驳回的图片{% endblock tittle %}
+{% block main_content%}
+	<div class="main_wrap clearfix">
+		<div class="r_wrap fr clearfix">{% if user.authority == 2  %}
+			<ul class="goods_type_list clearfix">
+                {% for good in goods_page.object_list %}
+				<li>
+					<a href="{% url 'goods:detailno' good.id%}" ><img src="/static/{{ good.image }}"></a>
+				</li>
+                {% endfor %}
+			</ul>
+        {% elif user.authority == 1%}
+        <ul class="goods_type_list clearfix">
+                {% for good in goods_page.object_list %}
+				<li>
+					<a href="#"><img src={{ good.image.url }}></a>
+				</li>
+                {% endfor %}
+			</ul>
+        {% endif %}
+
+			<div class="pagenation">
+                {% if goods_page.has_previous %}
+                    <a href="{% url 'goods:listno'  1 %}">首页</a>
+				<a href="{% url 'goods:listno'  goods_page.previous_page_number %}">上一页</a>
+                {% endif %}
+            {% for pindex in pages %}
+                {% if pindex == goods_page.number%}
+				<a href="{% url 'goods:listno'  pindex %}" class="active">{{ pindex }}</a>
+                {% else %}
+				<a href="{% url 'goods:listno'  pindex %}">{{ pindex }}</a>
+                {% endif %}
+            {% endfor %}
+                {% if goods_page.has_next %}
+				<a href="{% url 'goods:listno'  goods_page.next_page_number %}">下一页</a>
+                    <a href="{% url 'goods:listno' num_pages  %}">尾页</a>
+                {% endif %}
+			<input type="text" name="pageto" id="pageto" >
+            <a href="#" id="pageto1">跳转至指定页</a>
+			</div>
+
+		</div>
+	</div>
+{% endblock main_content %}
+{% block bottomfiles %}
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script type="text/javascript">
+    $('#pageto1').click(function () {
+        var pageto2 = $('#pageto').val();
+
+        if(pageto2){
+            if(pageto2 <= {{ num_pages }}){
+                window.location.href = pageto2;
+
+            }
+            else {
+                window.location.href = 1;
+            }
+
+
+        }
+
+
+    })
+    </script>
+
+{% endblock bottomfiles %}

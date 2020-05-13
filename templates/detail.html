@@ -1,0 +1,56 @@
+{% extends 'base_detail_list1.html' %}
+{% load staticfiles %}
+{% block tittle %}iship-图片详情{% endblock tittle %}
+{% block main_content %}
+{% csrf_token %}
+	<div class="goods_detail_con clearfix">
+    <input type="hidden" class="ids"  ids="{{ ids }}" value="{{ good.id }}" >
+		<div class="goods_detail_pic fl"><img src="/static/{{ good.image }}"></div>
+		 <div class="goods_detail_list fr">
+			<h3>{{good.spu1}}({{ good.ename }})</h3>
+			<div class="prize_bar">
+				<span class="show_pirze"><em>状态：{% if good.status == 0 %}未审{% elif good.status == 1 %}已审{% elif good.status == 2 %}驳回{% endif %}</em></span>
+				<span class="show_unit">坐标：({{ good.xl }},{{ good.yl }})({{ good.xr }},{{ good.yr }})</span>
+
+			</div>
+			<div class="total">图片来源：<em>{{good.imagefrom}}</em></div>
+            <div class="total">提供单位：<em>{{good.imageunite}}</em></div>
+            <div class="total">采集时间：<em>{{good.imagetime}}</em></div>
+            <div class="total">采集天气：<em>{{good.imageweather}}</em></div>
+            <div class="total">图片海域：<em>{{good.imageocean}}</em></div>
+            <div class="total">采集地点：<em>{{good.imagesite}}</em></div>
+            <div class="total">拍摄距离：<em>{{good.imagedistance}}</em></div>
+            <div class="download"><a id="download1" href="{% url  'goods:download_img' good.id %}">下载该图片</a>
+                <span><a id="delete" class="delete" href="#">删除该图片</a></span>
+                <input type="hidden" id="image_id" value="{{ good.id }}">
+        <div class="pagenation">
+				<a href="{% url 'goods:detail' before_page %}">上一个</a>
+				<a href="{% url 'goods:detail' next_page %}">下一个</a>
+        </div>
+        </div>
+{{ errmsg }}
+            </div>
+    </div>
+    </div>
+{% endblock main_content %}
+{% block bottomfiles %}
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script>
+    $('#delete').click(function () {
+        image_id = $('#image_id').val()
+        csrf=$('input[name="csrfmiddlewaretoken"]').val()
+        params = {'image_id':image_id,'csrfmiddlewaretoken':csrf}
+        $.ajaxSettings.async=false
+        $.post('/user/delete',params,function (data) {
+            if(data.res == 3){
+                alert('删除成功');
+                window.location.href = '{% url 'goods:detail' next_page %}';
+            }
+            else {
+                alert(data.errmsg)
+            }
+        })
+    })
+    $.ajaxSettings.async=true
+    </script>
+{% endblock bottomfiles %}

@@ -1,0 +1,35 @@
+{% extends 'base_no_cart.html' %}
+{% block tittle %}iship船舶图片收集网站{% endblock tittle %}
+{% block page_tittle %}用户中心{% endblock page_tittle %}
+{% block body %}
+    	<div class="main_con clearfix">
+		<div class="left_menu_con clearfix">
+			<h3>用户中心</h3>
+			<ul>
+				<li><a href="{% url 'user:user' %}" {% if page == 'user' %} class="active"{% endif %}>· 个人信息</a></li>
+				<li><a href="{% url 'user:change' %}"{% if page == 'change' %} class="active"{% endif %}>· 修改信息</a></li>
+            {% if user.authority == 2 or user.authority == 1 %}
+                <li><a href="{% url 'user:update_one' %}" {% if page == 'update_one' %} class="active"{% endif %} >· 单张上传 </a></li>
+            {% endif %}
+            {% if user.authority == 2 or user.authority == 1 %}
+                <li><a href="{% url 'user:update_much' %}" {% if page == 'update_much' %} class="active"{% endif %} >· 批量上传 </a></li>
+            {% endif %}
+            {% if user.authority == 2 or user.authority == 1 %}
+                <li><a href="{% url 'goods:listyet' 1 %}" >· 未审的图片 </a></li>
+                <li><a href="{% url 'goods:listok' 1 %}" >· 已审的图片 </a></li>
+                <li><a href="{% url 'goods:listno' 1 %}" >· 驳回的图片 </a></li>
+                <li><a href="{% url 'goods:list' 1 %}" >· 我的所有图片 </a></li>
+
+            {% endif %}
+            {% if user.authority == 3 %}
+            <li><a href="{% url 'goods:list_check' 1 %}" >· 审核图片 </a></li>
+            {% endif %}
+            <li><a href="{% url  'user:img_info' %}" {% if page == 'img_info' %} class="active"{% endif %}>· 图片工作进展情况 </a></li>
+
+			</ul>
+		</div>
+        {% block right_content %}{% endblock right_content %}
+        </div>
+{% endblock body %}
+
+{# 用户中心父模板 #}

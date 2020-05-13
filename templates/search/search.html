@@ -1,0 +1,49 @@
+{% extends 'base_detail_list1.html' %}
+{%load staticfiles %}
+{% block tittle %}iship搜索结果{% endblock tittle %}
+{% block main_content%}
+	<div class="breadcrumb">
+		<a href="#">{{query}}</a>
+		<span>></span>
+		<a href="#">搜索结果如下：</a>
+	</div>
+	<div class="main_wrap clearfix">
+        <ul class="goods_type_list clearfix">
+            {% for item in page %}
+                <li>
+                <a href="{% url 'goods:detail_other' item.object.id%}"><img src="/static/{{item.object.image}}"></a>
+                <h4><a href="{% url 'goods:detail_other' item.object.id%}">{{item.object.name}}</a></h4>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <div class="pagenation">
+                {% if page.has_previous %}
+                    <a href="/search?q={{ query }}&page=1">首页</a>
+				<a href="/search?q={{ query }}&page={{ page.previous_page_number }}">上一页</a>
+
+                {% endif %}
+                {% if page.has_next %}
+				<a href="/search?q={{ query }}&page={{ page.next_page_number }}">下一页</a>
+                    <a href="/search?q={{ query }}&page={{ paginator.num_pages }}">末页</a>
+                {% endif %}
+        <input type="text" name="pageto" id="pageto" >
+            <a href="#" id="pageto1">跳转至指定页</a>
+			</div>
+    </div>
+{% endblock main_content %}
+{% block bottomfiles %}
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script type="text/javascript">
+    $('#pageto1').click(function () {
+        var pageto2 = $('#pageto').val();
+
+        if(pageto2){
+                window.location.href = "/search?q={{ query }}&page="+pageto2;
+        }
+
+
+    })
+    </script>
+
+{% endblock bottomfiles %}

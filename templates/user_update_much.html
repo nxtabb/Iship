@@ -1,0 +1,47 @@
+{% extends 'base_user_center.html' %}
+{% load staticfiles %}
+{% block right_content %}
+<div class="right_content clearfix">
+				<div class="info_con clearfix">
+				<h3 class="common_title2">批量上传</h3>
+						<ul class="user_info_list">
+                            <li><span>操作方法：</span>请先下载模板文件并严格按照模板标准填入信息，否则上传会失败————将所有待上传文件放到一个文件夹中,并准备好excel文件（不要放到图片文件夹中）,进入图片文件夹点击ctrl+A选择全部图片后，点击确定，选择图片后，请点击下方按钮选择待上传excel文件后，点击提交即可实现批量上传。</li>
+                            <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                                <br><br>
+                                <div class="form_group3">
+							<li><span>选择图片：</span></li>
+							<input type="file" name="photo" multiple="">
+                            </div><br>
+                                <div class="form_group3">
+							<li><span>选择excel：</span></li>
+							<input type="file" name="xls">
+                            </div><br>
+
+                                <input type="submit"  name="" value="提交" class="info_submit1">
+
+					    </form>
+                        </ul>
+				</div>
+{{ errmsg }}
+		</div>
+
+{% endblock right_content %}
+{% block bottomfiles %}
+    <div class="popup_con">
+		<div class="popup">
+			<p>正在上传请稍候。。</p>
+		</div>
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+	<script>
+		$('.info_submit1').click(function() {
+			localStorage.setItem('order_finish',60);
+			$('.popup_con').fadeIn('fast', function() {
+				setTimeout(function(){
+					$('.popup_con').fadeOut('fast',function(){
+					});
+				},3000)
+			});
+		});
+	</script>
+{% endblock bottomfiles %}

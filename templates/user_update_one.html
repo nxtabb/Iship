@@ -1,0 +1,146 @@
+{% extends 'base_user_center.html' %}
+{% block right_content %}
+{% load staticfiles %}
+<div class="right_content clearfix">
+				<div class="info_con clearfix">
+				<h3 class="common_title2">单张上传</h3>
+						<ul class="user_info_list">
+                            <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                                <div class="form_group3">
+							<li><span>选择图片：</span></li>
+							<input type="file" name="photo">
+                            </div><br>
+                            <div class="form_group3">
+							<li><span>类别选择：</span></li>
+                                <select style="width:130px;height: 25px;margin-top: 5px" name="spu1" >
+                                    <option value="邮轮">邮轮</option>
+                                    <option value="集装箱船">集装箱船</option>
+                                    <option value="散货船及油轮">散货船及油轮</option>
+                                    <option value="岛礁">岛礁</option>
+                                    <option value="渔船">渔船</option>
+                                    <option value="航母">航母</option>
+                                    <option value="军舰">军舰</option>
+                                    <option value="帆船">帆船</option>
+                                    <option value="滚装船">滚装船</option>
+                                    <option value="危化品船">危化品船</option>
+                                    <option value="艇型船">艇型船</option>
+                                    <option value="工程船舶">工程船舶</option>
+                                    <option value="浮标">浮标</option>
+                                    <option value="灯桩">灯桩</option>
+                                    <option value="海工平台">海工平台</option>
+                                    <option value="浮冰">浮冰</option>
+                                    <option value="其他船舶">其他船舶</option>
+                                </select>
+                            </div>
+                            </br>
+                            <div class="form_group3">
+							<li><span>英文名称：</span></li>
+							<select style="width:130px;height: 25px;margin-top: 5px" name="ename" >
+                                    <option value="liner">liner-邮轮</option>
+                                    <option value="container ship">container ship-集装箱船</option>
+                                    <option value="bulk carrier">bulk carrier-散货船及油轮</option>
+                                    <option value="island reef">island reef-岛礁</option>
+                                    <option value="fishing boat">fishing boat-渔船</option>
+                                    <option value="aircraft carrier">aircraft carrier-航母</option>
+                                    <option value="warship">warship-军舰</option>
+                                    <option value="sailboat">sailboat-帆船</option>
+                                    <option value="ro-ro ship">ro-ro ship-滚装船</option>
+                                    <option value="chemical tanker">chemical tanker-危化品船</option>
+                                    <option value="canoe">canoe-艇型船</option>
+                                    <option value="engineering ship">engineering ship-工程船舶</option>
+                                    <option value="buoy">buoy-浮标</option>
+                                    <option value="light beacon">light beacon-灯桩</option>
+                                    <option value="offshore platform">offshore platform-海工平台</option>
+                                    <option value="loating ice">loating ice-浮冰</option>
+                                    <option value="other ship">other ship-其他船舶</option>
+                                </select>
+                            </div><br>
+                                <div class="form_group3">
+							<li><span>左上 x：</span></li>
+							<input type="text" placeholder="请输入纯数字"  name="xl">
+						</div></br>
+                                <div class="form_group3">
+							<li><span>左上 y：</span></li>
+							<input type="text" placeholder="请输入纯数字" name="yl">
+						</div></br>
+                                <div class="form_group3">
+							<li><span>右下 x：</span></li>
+							<input type="text"  placeholder="请输入纯数字" name="xr">
+						</div></br>
+                                <div class="form_group3">
+							<li><span>右下 y：</span></li>
+							<input type="text"  placeholder="请输入纯数字" name="yr">
+						</div></br>
+                                <div class="form_group3">
+							<li><span>图片来源：</span></li>
+							<input type="text" name="imagefrom">
+						</div></br>
+                                <div class="form_group3">
+							<li><span>提供单位：</span></li>
+							<input type="text" name="imageunite">
+						</div></br>
+                                <div class="form_group3">
+							<li><span>提供时间：</span></li>
+							<input type="text" placeholder="如：2020.3.1" name="imagetime">
+						</div></br>
+                                <div class="form_group3">
+							<li><span>提供地点：</span></li>
+                                <select style="width:130px;height: 25px;margin-top: 5px" name="imagesite" >
+                                    <option value="开阔海域">开阔海域</option>
+                                    <option value="狭窄航道">狭窄航道</option>
+                                    <option value="码头">码头</option>
+                                    <option value="其他">其他</option>
+                               </select>
+						</div></br>
+                                <div class="form_group3">
+							<li><span>天气情况：</span></li>
+							<input type="text" name="imageweather">
+						</div></br>
+                                <div class="form_group3">
+							<li><span>提供海域：</span></li>
+							<input type="text" name="imageocean">
+						</div></br>
+                                <div class="form_group3">
+							<li><span>拍摄距离：</span></li>
+							<input type="text" placeholder="可自行填入距离单位 如无则可为空" name="imagedistance">
+						</div></br>
+                                <div class="form_group3">
+							<li><span>目标AIS：</span></li>
+							<input type="text" name="toais">
+						</div></br>
+                                <div class="form_group3">
+							<li><span>拍摄AIS：</span></li>
+							<input type="text" name="fromais">
+						</div><br>
+                                <input type="submit" name="" value="提交" class="info_submit1">
+
+					    </form>
+                        </ul>
+				</div>
+{{ errmsg }}
+		</div>
+{% endblock right_content %}
+
+
+{% block bottomfiles %}
+    <div class="popup_con">
+                <div class="popup">
+                        <p>正在上传请稍候。。</p>
+                </div>
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+        <script>
+                $('.info_submit1').click(function() {
+                        localStorage.setItem('order_finish',60);
+                        $('.popup_con').fadeIn('fast', function() {
+                                setTimeout(function(){
+                                        $('.popup_con').fadeOut('fast',function(){
+                                        });
+                                },3000)
+                        });
+                });
+        </script>
+{% endblock bottomfiles %}
+
+
+

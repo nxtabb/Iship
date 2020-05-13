@@ -1,0 +1,60 @@
+{% extends 'base1.html' %}
+{% block body%}
+    <div class="navbar_con">
+		<div class="navbar clearfix">
+			<div class="subnav_con fl">
+				<h1>查看过审图片导航</h1>
+						<ul class="subnav fl">
+        <table class="table1" border="0" width="300" >
+  <tr>
+    <th><a href="{% url 'goods:list_more' 1 1 %}" class="{{ type.logo}}">邮轮</a></th>
+    <th><a href="{% url 'goods:list_more' 4 1 %}" class="{{ type.logo}}">散货船及油轮</a></th>
+    <th><a href="{% url 'goods:list_more' 12 1 %}" class="{{ type.logo}}">艇型船</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more' 7 1 %}" class="{{ type.logo}}">航母</a></th>
+    <th><a href="{% url 'goods:list_more' 11 1 %}" class="{{ type.logo}}">危化品船</a></th>
+    <th><a href="{% url 'goods:list_more' 10 1 %}" class="{{ type.logo}}">滚装船</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more' 8 1 %}" class="{{ type.logo}}">军舰</a></th>
+    <th><a href="{% url 'goods:list_more' 16 1 %}" class="{{ type.logo}}">海工平台</a></th>
+    <th><a href="{% url 'goods:list_more' 5 1 %}" class="{{ type.logo}}">岛礁</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more' 6 1 %}" class="{{ type.logo}}">渔船</a></th>
+    <th><a href="{% url 'goods:list_more' 3 1 %}" class="{{ type.logo}}">集装箱船</a></th>
+    <th><a href="{% url 'goods:list_more' 15 1 %}" class="{{ type.logo}}">灯桩</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more' 14 1 %}" class="{{ type.logo}}">浮标</a></th>
+    <th><a href="{% url 'goods:list_more' 13 1 %}" class="{{ type.logo}}">工程船舶</a></th>
+    <th><a href="{% url 'goods:list_more' 9 1 %}" class="{{ type.logo}}">帆船</a></th>
+  </tr>
+            <tr>
+    <th><a href="{% url 'goods:list_more' 17 1 %}" class="{{ type.logo}}">浮冰</a></th>
+    <th><a href="{% url 'goods:list_more' 18 1 %}" class="{{ type.logo}}">其他船舶</a></th>
+  </tr>
+
+
+</table>
+		</ul>
+			</div>
+			<ul class="navlist fl">
+				<li><a href="{% url 'goods:listyet' 1 %}">我的未审图片</a></li>
+				<li class="interval">|</li>
+				<li><a href="{% url 'goods:listok' 1 %}">我的已审图片</a></li>
+				<li class="interval">|</li>
+				<li><a href="{% url 'goods:listno' 1 %}">我的被驳回图片</a></li>
+                <li class="interval">|</li>
+				<li><a href="{% url 'goods:list' 1 %}">我的所有图片</a></li>
+                <li class="interval">|</li>
+				<li><a href="{% url 'goods:download' %}">下载xls和标注工具</a></li>
+			</ul>
+		</div>
+	</div>
+    {% block main_content %}{% endblock main_content %}
+
+{% endblock body %}
+
+{# 详情和列表父模板 #}

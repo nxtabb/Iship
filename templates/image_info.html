@@ -1,0 +1,337 @@
+{% extends 'base_user_center.html' %}
+{% load staticfiles %}
+{% block right_content %}
+<div class="right_content clearfix">
+				<div class="info_con clearfix">
+
+
+						<ul class="user_info_list1">
+
+                        <div id="container1" style=" width:300px;min-width:280px;height:300px ;margin-left: 0px;margin-top:-10px;"></div>
+                            <div id="container2" style="  width:300px;min-width:280px;height:300px ;margin-left: 700px;margin-top: -310px"></div>
+                            <div id="container3" style=" width:300px;min-width:280px;height:300px ;margin-left: 0px;margin-top: 50px"></div>
+                            <div id="container4" style=" width:300px;min-width:280px;height:300px ;margin-left: 700px;margin-top: -300px"></div>
+                            <div id="container5" style=" width:300px;min-width:280px;height:300px ;margin-left: 0px;margin-top: 50px"></div>
+                            <div id="container6" style=" width:300px;min-width:280px;height:300px ;margin-left: 700px;margin-top: -300px"></div>
+
+
+                        </ul>
+
+				</div>
+
+		</div>
+{% endblock right_content %}
+{% block bottomfiles %}
+<div class="container_pic_module_column"></div>
+<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+<script type="text/javascript">
+        Highcharts.chart('container1', {
+		chart: {
+		        marginLeft: 0,
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie',
+		},
+        credits: {
+            enabled: false
+        },
+		title: {
+				text: '{{user3.username}}'
+		},
+        exporting: {
+                enabled:false
+            },
+		tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		plotOptions: {
+				pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+								enabled: true,
+								format: '<b>{point.name}</b>: {point.y} 张',
+								style: {
+										color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+								}
+						}
+				}
+		},
+		series: [{
+				name: '占比',
+				colorByPoint: true,
+				data: [{
+						name: '未审核图片',
+						y: {{ user3.imageyet_count }}
+
+				}, {
+						name: '已审核图片',
+						y:{{ user3.imageyes_count }}
+				}, {
+						name: '被驳回图片',
+						y:{{ user3.imageno_count }}
+				}]
+		}]
+});
+
+
+
+        Highcharts.chart('container2', {
+		chart: {
+		        marginLeft: 0,
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie',
+		},
+		title: {
+				text: '{{user4.username}}'
+		},
+        exporting: {
+                enabled:false
+            },
+        credits: {
+            enabled: false
+        },
+		tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		plotOptions: {
+				pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+								enabled: true,
+								format: '<b>{point.name}</b>: {point.y} 张',
+								style: {
+										color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+								}
+						}
+				}
+		},
+		series: [{
+				name: '占比',
+				colorByPoint: true,
+				data: [{
+						name: '未审核图片',
+						y: {{ user4.imageyet_count }}
+
+				}, {
+						name: '已审核图片',
+						y:{{ user4.imageyes_count }}
+				}, {
+						name: '被驳回图片',
+						y:{{ user4.imageno_count }}
+				}]
+		}]
+});
+
+        Highcharts.chart('container3', {
+		chart: {
+		        marginLeft: 0,
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie',
+		},
+		title: {
+				text: '{{user5.username}}'
+		},
+        exporting: {
+                enabled:false
+            },
+        credits: {
+            enabled: false
+        },
+		tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		plotOptions: {
+				pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+								enabled: true,
+								format: '<b>{point.name}</b>: {point.y} 张',
+								style: {
+										color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+								}
+						}
+				}
+		},
+		series: [{
+				name: '占比',
+				colorByPoint: true,
+				data: [{
+						name: '未审核图片',
+						y: {{ user5.imageyet_count }}
+
+				}, {
+						name: '已审核图片',
+						y:{{ user5.imageyes_count }}
+				}, {
+						name: '被驳回图片',
+						y:{{ user5.imageno_count }}
+				}]
+		}]
+});
+
+        Highcharts.chart('container4', {
+		chart: {
+		        marginLeft: 0,
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie',
+		},
+		title: {
+				text: '{{user6.username}}'
+		},
+        exporting: {
+                enabled:false
+            },
+        credits: {
+            enabled: false
+        },
+
+		tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		plotOptions: {
+				pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+								enabled: true,
+								format: '<b>{point.name}</b>: {point.y} 张',
+								style: {
+										color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+								}
+						}
+				}
+		},
+		series: [{
+				name: '占比',
+				colorByPoint: true,
+				data: [{
+						name: '未审核图片',
+						y: {{ user6.imageyet_count }}
+
+				}, {
+						name: '已审核图片',
+						y:{{ user6.imageyes_count }}
+				}, {
+						name: '被驳回图片',
+						y:{{ user6.imageno_count }}
+				}]
+		}]
+});
+
+        Highcharts.chart('container5', {
+		chart: {
+		        marginLeft: 0,
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie',
+		},
+		title: {
+				text: '{{user7.username}}'
+		},
+        exporting: {
+                enabled:false
+            },
+        credits: {
+            enabled: false
+        },
+		tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		plotOptions: {
+				pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+								enabled: true,
+								format: '<b>{point.name}</b>: {point.y} 张',
+								style: {
+										color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+								}
+						}
+				}
+		},
+		series: [{
+				name: '占比',
+				colorByPoint: true,
+				data: [{
+						name: '未审核图片',
+						y: {{ user7.imageyet_count }}
+
+				}, {
+						name: '已审核图片',
+						y:{{ user7.imageyes_count }}
+				}, {
+						name: '被驳回图片',
+						y:{{ user7.imageno_count }}
+				}]
+		}]
+});
+
+        Highcharts.chart('container6', {
+		chart: {
+		        marginLeft: 0,
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie',
+		},
+		title: {
+				text: '{{user8.username}}'
+		},
+        exporting: {
+                enabled:false
+            },
+        credits: {
+            enabled: false
+        },
+		tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		plotOptions: {
+				pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+								enabled: true,
+								format: '<b>{point.name}</b>: {point.y} 张',
+								style: {
+										color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+								}
+						}
+				}
+		},
+		series: [{
+				name: '占比',
+				colorByPoint: true,
+				data: [{
+						name: '未审核图片',
+						y: {{ user8.imageyet_count }}
+
+				}, {
+						name: '已审核图片',
+						y:{{ user8.imageyes_count }}
+				}, {
+						name: '被驳回图片',
+						y:{{ user8.imageno_count }}
+				}]
+		}]
+});
+
+
+    </script>
+
+{% endblock bottomfiles %}

@@ -1,0 +1,106 @@
+{% extends 'base_detail_list2.html' %}
+{% load staticfiles %}
+{% block tittle %}iship-图片详情{% endblock tittle %}
+{% block main_content %}
+{% csrf_token %}
+	<div class="goods_detail_con clearfix">
+    <input type="hidden" class="ids"  ids="{{ ids }}" value="{{ good.id }}" >
+		<div class="goods_detail_pic fl"><canvas id="canvas" width="560" height="460"></canvas></div>
+		 <div class="goods_detail_list fr">
+			<h3>{{good.spu1}}({{ good.ename }})</h3>
+			<div class="prize_bar">
+				<span class="show_pirze"><em>状态：{% if good.status == 0 %}未审{% elif good.status == 1 %}已审{% elif good.status == 2 %}驳回{% endif %}</em></span>
+				<span class="show_unit">坐标：({{ good.xl }},{{ good.yl }})({{ good.xr }},{{ good.yr }})</span>
+			</div>
+			<div class="total">图片来源：<em>{{good.imagefrom}}</em></div>
+            <div class="total">提供单位：<em>{{good.imageunite}}</em></div>
+            <div class="total">采集时间：<em>{{good.imagetime}}</em></div>
+            <div class="total">采集天气：<em>{{good.imageweather}}</em></div>
+            <div class="total">图片海域：<em>{{good.imageocean}}</em></div>
+            <div class="total">采集地点：<em>{{good.imagesite}}</em></div>
+            <div class="total">拍摄距离：<em>{{good.imagedistance}}</em></div>
+            <div class="total">上传用户：<em>{{username}}</em></div>
+             <div class="download"><a id="download1" href="{% url  'goods:download_img' good.id %}">下载该图片</a></div>
+         <input type="hidden" id="image_id" value="{{ good.id }}">
+                <div class="download"><a id="agree" href="#">同意过审</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a id="disagree" href="#">驳回图片</a></div>
+                <div class="pagenation">
+				<a href="{% url 'goods:detail_check' before_page %}" >上一个</a>
+				<a href="{% url 'goods:detail_check' next_page %}" >下一个</a>
+        </div>
+
+        </div>
+{{ errmsg }}
+    </div>
+
+{% endblock main_content %}
+
+{% block bottomfiles %}
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script>
+    $('#agree').click(function () {
+        image_id = $('#image_id').val()
+        csrf=$('input[name="csrfmiddlewaretoken"]').val()
+        params = {'image_id':image_id,'csrfmiddlewaretoken':csrf}
+        $.post('/user/agree',params,function (date) {
+            if(date.res==2){
+                alert('审批成功')
+                window.location.href = '{% url 'goods:detail_check' next_page %}';
+            }
+            else {
+                alert(data.errmsg)
+            }
+
+        })
+
+    })
+
+    $('#disagree').click(function () {
+        image_id = $('#image_id').val()
+        csrf=$('input[name="csrfmiddlewaretoken"]').val()
+        params = {'image_id':image_id,'csrfmiddlewaretoken':csrf}
+        $.post('/user/disagree',params,function (date) {
+            if(date.res==2){
+                alert('驳回成功')
+                window.location.href = '{% url 'goods:detail_check' next_page %}';
+            }
+            else {
+                alert(data.errmsg)
+            }
+        })
+
+    })
+    </script>
+
+<script>
+            const img = new Image();
+            const canvas = document.querySelector("#canvas");
+            let ctx;
+            ctx = canvas.getContext("2d");
+            // 当图片加载完再动手
+            img.onload = function () {
+                // 画布大小和图片尺寸不一样算好比例
+                const cWidth = canvas.width, cHeight = canvas.height;
+                const imgWidth = img.naturalWidth, imgHeight = img.naturalHeight;
+                const zoom = {
+                    width: cWidth / imgWidth,
+                    height: cHeight / imgHeight,
+                };
+                // 以图画底
+                ctx.drawImage(img, 0, 0, cWidth, cHeight);
+                // 假设左上角的point 29,24 这是针对原图的坐标系
+                // 假设右下角的point 124,52 这是针对原图的坐标系
+                const startPoint = [{{xl}}, {{ yl }}], endPoint = [{{xr}}, {{ yr }}];
+                // https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/strokeRect
+                ctx.strokeStyle = "blue";
+                ctx.strokeRect(
+                    startPoint[0] * zoom.width,
+                    startPoint[1] * zoom.height,
+                    (endPoint[0] - startPoint[0]) * zoom.width,
+                    (endPoint[1] - startPoint[1]) * zoom.height
+                );
+            }
+            // 动手
+            img.src = "/static/{{ good.image1 }}";
+        </script>
+{% endblock bottomfiles %}
